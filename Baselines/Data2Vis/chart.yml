@@ -1,0 +1,57 @@
+model: AttentionSeq2Seq
+model_params:
+  attention.class: seq2seq.decoders.attention.AttentionLayerDot
+  attention.params:
+    num_units: 256
+  bridge.class: seq2seq.models.bridges.ZeroBridge
+  embedding.dim: 256
+  encoder.class: seq2seq.encoders.BidirectionalRNNEncoder
+  encoder.params:
+    rnn_cell:
+      cell_class: LSTMCell
+      cell_params:
+        num_units: 256
+      dropout_input_keep_prob: 0.5
+      dropout_output_keep_prob: 1.0
+      num_layers: 1
+  decoder.class: seq2seq.decoders.AttentionDecoder
+  decoder.params:
+    rnn_cell:
+      cell_class: LSTMCell
+      cell_params:
+        num_units: 128
+      dropout_input_keep_prob: 0.5
+      dropout_output_keep_prob: 1.0
+      num_layers: 2
+    max_decode_length: 500
+  optimizer.name: Adam
+  optimizer.params:
+    epsilon: 0.0000008
+  optimizer.learning_rate: 0.0001
+  source.max_seq_len: 500
+  source.reverse: false
+  target.max_seq_len: 130
+  vocab_source: chart/vocab_src.txt
+  vocab_target: chart/vocab_tgt.txt
+input_pipeline_train:
+  class: ParallelTextInputPipeline
+  params:
+    source_delimiter: ''
+    target_delimiter: ''
+    source_files: 
+      - chart/train_src.txt
+    target_files: 
+      - chart/train_tgt.txt
+input_pipeline_dev:
+  class: ParallelTextInputPipeline
+  params:
+    source_delimiter: ''
+    target_delimiter: ''
+    source_files: 
+      - chart/dev_src.txt
+    target_files: 
+      - chart/dev_tgt.txt
+batch_size: 16
+train_steps: 29406
+save_checkpoints_steps: 500
+eval_every_n_steps: 30000

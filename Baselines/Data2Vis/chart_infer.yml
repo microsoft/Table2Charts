@@ -1,0 +1,13 @@
+tasks:
+  - class: DecodeText
+    params:
+      delimiter: ''
+model_params:
+  inference.beam_search.beam_width: 30
+input_pipeline:
+  class: ParallelTextInputPipeline
+  params:
+    source_delimiter: ''
+    target_delimiter: ''
+    source_files: 
+       - chart/test_src.txt
