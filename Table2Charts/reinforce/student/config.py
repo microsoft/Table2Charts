@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from torch.nn import Module
 from torch.optim.optimizer import Optimizer
 

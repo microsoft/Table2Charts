@@ -1,20 +1,21 @@
-from collections import defaultdict
-from typing import List, Optional, Tuple, Set, Iterable
-import os
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 
 import numpy as np
+import os
 import torch
+from collections import defaultdict
 from torch.utils.data import Dataset, ConcatDataset
 from torch.utils.data._utils.collate import default_collate
 from torch.utils.data._utils.pin_memory import pin_memory
 from tqdm import tqdm
+from typing import List, Optional, Tuple, Set, Iterable
 
 from .config import DataConfig
 from .dataset import DataTable, Chart
 from .sequence import Sequence, State
 from .special_tokens import SpecialTokens
 from .token import AnaType, Token
-
 
 
 class ChartUserActions(Dataset):

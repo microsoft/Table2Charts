@@ -1,6 +1,8 @@
-from typing import List, Union, Tuple
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 
 import numpy as np
+from typing import List, Union, Tuple
 
 from .special_tokens import SpecialTokens
 from .token import Token, TokenType, AnaType, FieldType, Segment
@@ -52,7 +54,6 @@ class Template:
                 raise ValueError(f"{token} do not follow {self.ana.name} template at index {idx + steps}.")
             steps += 1
         return steps
-
 
 
 TEMPLATES_SINGLE = {

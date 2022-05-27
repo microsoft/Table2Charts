@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import argparse
 import json
 import os
@@ -102,7 +105,7 @@ if __name__ == '__main__':
 
     lost_table = 0
     lost_chart = 0
-    
+
     # make dir 
     if not os.path.exists(dataset_path):
         os.makedirs(dataset_path)
@@ -113,7 +116,7 @@ if __name__ == '__main__':
         sids.append(file.split('.')[0])
 
     test_tids = load_json(dataset_path + 'test.txt')
-    
+
     for stid in tqdm(test_tids):
         sid = int(stid.split('.')[0])
         tid = int(stid.split('.')[1].strip('t'))
@@ -138,8 +141,8 @@ if __name__ == '__main__':
             f.write(json.dumps(table_data_line))
             f.write('\n')
 
-        with open(save_dir+"/head_idx.txt","a")as f:
+        with open(save_dir + "/head_idx.txt", "a")as f:
             f.write(json.dumps(pair_data.head_idx))
             f.write("\n")
 
-    print("lost tables:",lost_table, "lost charts:",lost_chart)
+    print("lost tables:", lost_table, "lost charts:", lost_chart)

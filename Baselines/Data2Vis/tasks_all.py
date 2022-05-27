@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import argparse
 import json
 
@@ -101,22 +104,23 @@ if __name__ == "__main__":
     parser.add_argument('--pred', type=str,
                         default='pred.txt', help='predction result file')
     parser.add_argument('--target', type=str, default='test_tgt.txt', help='target file')
-    parser.add_argument('--debug',action="store_true", help='debug mode')
-    parser.add_argument('--cnt_emp',action="store_true", help='count the result without any valid chart recommendation in task2')
+    parser.add_argument('--debug', action="store_true", help='debug mode')
+    parser.add_argument('--cnt_emp', action="store_true",
+                        help='count the result without any valid chart recommendation in task2')
     args = parser.parse_args()
 
     # print result
-    debug=args.debug
+    debug = args.debug
     k = 20
-    k1=0
-    k2=0 
-    k0=0
-    task0_pos=[]
-    task1_pos=[] 
-    task2_pos=[]
-    task0_neg=[]
-    task1_neg=[]
-    task2_neg=[]
+    k1 = 0
+    k2 = 0
+    k0 = 0
+    task0_pos = []
+    task1_pos = []
+    task2_pos = []
+    task0_neg = []
+    task1_neg = []
+    task2_neg = []
 
     # load all examples
     pred_file = args.pred
@@ -137,8 +141,8 @@ if __name__ == "__main__":
 
     n = 0
     n_c = 0  # n charts
-    n_s=0 # n of scatter chart
-    n_all=0
+    n_s = 0  # n of scatter chart
+    n_all = 0
 
     valid = 0
     task0_recall = [0, 0, 0]
@@ -186,7 +190,7 @@ if __name__ == "__main__":
             else:
                 result0.append(0)
                 result1.append(0)
-        
+
         task0_recall[0] += int(bool(sum(result0[:1])))
         task0_recall[1] += int(bool(sum(result0[:3])))
         task0_recall[2] += int(bool(sum(result0[:5])))
@@ -196,27 +200,27 @@ if __name__ == "__main__":
         task1_recall[2] += int(bool(sum(result1[:5])))
 
         if debug:
-            if int(bool(sum(result0[:1])))==1:
-                n_all+=1
-                if to_json(pred_li[0])["type"]=="scatterChart":
-                    n_s+=1
-            if int(bool(sum(result0[:1])))==1 and k0<k:
-                task0_pos.append((i,pred_li[0],tgt_li))
-                k0+=1
-            if int(bool(sum(result1[:1])))==1 and k1<k:
-                task1_pos.append((i,pred_li[0],tgt_li))
-                k1+=1
-        
+            if int(bool(sum(result0[:1]))) == 1:
+                n_all += 1
+                if to_json(pred_li[0])["type"] == "scatterChart":
+                    n_s += 1
+            if int(bool(sum(result0[:1]))) == 1 and k0 < k:
+                task0_pos.append((i, pred_li[0], tgt_li))
+                k0 += 1
+            if int(bool(sum(result1[:1]))) == 1 and k1 < k:
+                task1_pos.append((i, pred_li[0], tgt_li))
+                k1 += 1
+
         # task 2
-        pattern_dic={}
+        pattern_dic = {}
         for tgt_chart in tgt_li:
-            pattern=tuple(sorted(list(set(tgt_chart["x"]+tgt_chart["y"]))))
+            pattern = tuple(sorted(list(set(tgt_chart["x"] + tgt_chart["y"]))))
             if pattern not in pattern_dic.keys():
-                pattern_dic[pattern]=[tgt_chart]
+                pattern_dic[pattern] = [tgt_chart]
             else:
                 pattern_dic[pattern].append(tgt_chart)
 
-        #for tgt_chart in tgt_li:
+        # for tgt_chart in tgt_li:
         for tgt_chart_li in pattern_dic.values():
             topk = []
             for p in pred_li:
@@ -225,18 +229,18 @@ if __name__ == "__main__":
                     continue
                 if field_selection_equal(pred_chart, tgt_chart_li[0]):
                     topk.append(pred_chart)
-            if len(topk)==0:
+            if len(topk) == 0:
                 if args.cnt_emp:
                     n_c += 1
             else:
-                n_c+=1
+                n_c += 1
             result2 = []
             for pred_chart in topk:
-                in_tgt=False
+                in_tgt = False
                 for tgt_chart in tgt_chart_li:
                     if vis_encoding_equal(pred_chart, tgt_chart):
-                        in_tgt=True
-                if in_tgt:   
+                        in_tgt = True
+                if in_tgt:
                     result2.append(1)
                 else:
                     result2.append(0)
@@ -244,9 +248,9 @@ if __name__ == "__main__":
             task2_recall[1] += int(bool(sum(result2[:3])))
             task2_recall[2] += int(bool(sum(result2[:5])))
             if debug:
-                if int(bool(sum(result2[:1])))==1 and k2<k:
-                    task2_pos.append((i,topk[0],tgt_chart_li))
-                    k2+=1
+                if int(bool(sum(result2[:1]))) == 1 and k2 < k:
+                    task2_pos.append((i, topk[0], tgt_chart_li))
+                    k2 += 1
 
     n_t = len(all_pred)  # n_tables
     print('n tables:', n_t)
@@ -256,7 +260,7 @@ if __name__ == "__main__":
     print('task1 recall@1,3,5:', task1_recall[0] / n_t, task1_recall[1] / n_t, task1_recall[2] / n_t)
     print('task2 recall@1,3,5:', task2_recall[0] / n_c, task2_recall[1] / n_c, task2_recall[2] / n_c)
     if debug:
-        print("% scatter chart in correct task0:",n_s/n_all)
+        print("% scatter chart in correct task0:", n_s / n_all)
         print("task0 pos")
         for item in task0_pos:
             print(item)

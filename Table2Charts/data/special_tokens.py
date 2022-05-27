@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from .config import DataConfig
 from .token import Token, TokenType, AggFunc, AnaType, GroupingOp
 from .util import load_json

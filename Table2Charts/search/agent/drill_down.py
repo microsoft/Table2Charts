@@ -1,11 +1,13 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from copy import copy
-from typing import Optional, List, Iterable, Set, Union
-
-from sortedcontainers import SortedList
-
 from data import DataConfig, State, DataTable, TableQValues, QValue, SpecialTokens, Result, \
     determine_action_values, get_template
 from search import Recorder
+from sortedcontainers import SortedList
+from typing import Optional, List, Iterable, Set, Union
+
 from .agent import Agent
 from .config import SearchConfig
 

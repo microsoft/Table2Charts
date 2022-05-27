@@ -1,4 +1,8 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import torch.nn as nn
+
 from .attention import MultiHeadedAttention
 from .util import SublayerConnection, FeedForward
 

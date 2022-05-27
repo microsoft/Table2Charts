@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 EPS = 2e-33
 SAMPLED_LENGTH_LIMIT = 500
 _DEFAULT_FORMAT_MAPPINGS = {

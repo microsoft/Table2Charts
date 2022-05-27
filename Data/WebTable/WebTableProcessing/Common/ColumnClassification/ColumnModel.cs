@@ -1,4 +1,7 @@
-﻿using ColumnClassification.Utils;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+using ColumnClassification.Utils;
 using Microsoft.Recognizers.Text;
 using Microsoft.Recognizers.Text.DateTime;
 using Microsoft.Recognizers.Text.Number;

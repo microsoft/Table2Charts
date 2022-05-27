@@ -1,4 +1,7 @@
-﻿namespace Common
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace Common
 {
     public class GeneralCell : IGeneralCell
     {

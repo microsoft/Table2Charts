@@ -1,7 +1,9 @@
-from enum import Enum, IntEnum
-from typing import Optional, Tuple
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 
 import numpy as np
+from enum import Enum, IntEnum
+from typing import Optional, Tuple
 
 
 class TokenType(IntEnum):

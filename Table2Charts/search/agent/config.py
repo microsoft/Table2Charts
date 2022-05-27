@@ -1,6 +1,9 @@
-from typing import Optional
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import numpy as np
 from data import AnaType
+from typing import Optional
 
 
 class SearchConfig:
@@ -69,7 +72,8 @@ def get_search_config(load_ground_truth: bool, limits: str,
                       test_field_selections: bool = False,
                       test_design_choices: bool = False) -> SearchConfig:
     if limits == "e200-b4-r4c2":
-        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, beam_size=4, r_limit=4, c_limit=2)
+        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, beam_size=4, r_limit=4,
+                                 c_limit=2)
     elif limits == "e200-b8-r4c2":
         config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, r_limit=4, c_limit=2)
     elif limits == "e200-b4-na":
@@ -77,17 +81,22 @@ def get_search_config(load_ground_truth: bool, limits: str,
     elif limits == "e200-b8-na":
         config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices)
     elif limits == "e100-b4-r4c2":
-        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=100, beam_size=4, r_limit=4, c_limit=2)
+        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=100,
+                                 beam_size=4, r_limit=4, c_limit=2)
     elif limits == "e100-b8-r4c2":
-        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=100, r_limit=4, c_limit=2)
+        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=100,
+                                 r_limit=4, c_limit=2)
     elif limits == "e100-b4-na":
-        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=100, beam_size=4)
+        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=100,
+                                 beam_size=4)
     elif limits == "e100-b8-na":
         config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=100)
     elif limits == "e50-b4-r4c2":
-        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=50, beam_size=4, r_limit=4, c_limit=2)
+        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=50,
+                                 beam_size=4, r_limit=4, c_limit=2)
     elif limits == "e50-b4-na":
-        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=50, beam_size=4)
+        config = get_ebrc_config(load_ground_truth, test_field_selections, test_design_choices, expand_limit=50,
+                                 beam_size=4)
     else:
         raise NotImplementedError(f"Agent config for {limits} not yet implemented.")
 

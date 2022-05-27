@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from .config import DataConfig, get_data_config, DEFAULT_LANGUAGES, DEFAULT_FEATURE_CHOICES, DEFAULT_ANALYSIS_TYPES, \
     TYPE_MAP, FEATURE_MAP, INDEX_FEATURE
 from .dataset import Index, DataTable

@@ -1,19 +1,21 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import argparse
 import logging
 import os
-from os import path, getpid
-
 import torch
 import torch.distributed as dist
 import torch.multiprocessing as mp
-from torch.utils.data import DataLoader
-from torch.utils.data.distributed import DistributedSampler
-from torch.utils.tensorboard import SummaryWriter
-
 from data import Index, QValueDataset, DEFAULT_LANGUAGES, DEFAULT_FEATURE_CHOICES, DEFAULT_ANALYSIS_TYPES
 from helper import construct_data_config, create_model, prepare_model, save_ddp_checkpoint
 from model import DEFAULT_MODEL_SIZES, DEFAULT_MODEL_NAMES
+from os import path, getpid
+from torch.utils.data import DataLoader
+from torch.utils.data.distributed import DistributedSampler
+from torch.utils.tensorboard import SummaryWriter
 from util import num_params, get_num_params
+
 from .trainer import Trainer
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
@@ -172,5 +174,4 @@ def pretrain(args):
 
 
 if __name__ == "__main__":
-
     pretrain(get_arguments())

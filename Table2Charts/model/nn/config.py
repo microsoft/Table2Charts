@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from data import DataConfig, TokenType, AnaType, Segment
 from typing import Optional
 
@@ -20,6 +23,7 @@ class ModelConfig:
 
         self.hidden = hidden_size
         self.dropout = dropout
+
 
 class CopyNetConfig(ModelConfig):
     """Hyper-parameters for the CopyNet architecture"""

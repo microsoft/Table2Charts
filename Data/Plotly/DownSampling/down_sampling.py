@@ -1,12 +1,14 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import argparse
 import collections
 import multiprocessing
 import os
 import time
 from collections import defaultdict
-from tqdm import tqdm
-
 from down_sampler import proc_sample, eval_sampling_perf, sample_plotly
+from tqdm import tqdm
 from utils import transform_chart_type, dump_json, CORPUS, load_json, keep_plotly_table
 
 

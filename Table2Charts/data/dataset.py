@@ -1,5 +1,9 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import json
 import logging
+import numpy as np
 import os
 import random
 from abc import ABC, abstractmethod
@@ -7,8 +11,6 @@ from collections import OrderedDict
 from collections import namedtuple, defaultdict
 from itertools import permutations
 from typing import List, Optional, Tuple, Union
-
-import numpy as np
 
 from .config import DataConfig
 from .sequence import Sequence, State

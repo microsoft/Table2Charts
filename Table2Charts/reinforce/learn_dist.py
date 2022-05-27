@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 """
 Launch this script following https://pytorch.org/docs/stable/distributed.html#launch-utility
 Or find examples in learn_dist.sh
@@ -5,24 +8,22 @@ Or find examples in learn_dist.sh
 import argparse
 import logging
 import multiprocessing as mp
-import os
-import sys
-import traceback
-from enum import IntEnum
-from os import path, getpid
-from time import perf_counter
-
 import numpy as np
+import os
 import pika
+import sys
 import torch
 import torch.distributed as dist
-from torch.utils.tensorboard import SummaryWriter
-
+import traceback
 from data import Index, DEFAULT_LANGUAGES, DEFAULT_FEATURE_CHOICES, DEFAULT_ANALYSIS_TYPES
+from enum import IntEnum
 from helper import construct_data_config, create_model, prepare_model
 from model import DEFAULT_MODEL_SIZES, DEFAULT_MODEL_NAMES
+from os import path, getpid
 from reinforce.student import Student, StudentConfig
 from search.agent import get_search_config, DEFAULT_SEARCH_LIMITS
+from time import perf_counter
+from torch.utils.tensorboard import SummaryWriter
 from util import num_params
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',

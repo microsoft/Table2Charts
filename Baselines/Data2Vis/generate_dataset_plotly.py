@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import argparse
 import json
 import os
@@ -87,7 +90,7 @@ class PairData():
     def get_chart_data(self, data, chart_type, type_first):
         if type_first:
             dic = dict()
-            dic['type']=chart_type
+            dic['type'] = chart_type
             try:
                 dic['y'] = [self.head_map[y['name']] for y in data['values']]
             except:
@@ -100,7 +103,7 @@ class PairData():
                 dic['group'] = self.map_group(data['grouping'])
         else:
             dic = dict()
-            dic['type']=chart_type
+            dic['type'] = chart_type
             try:
                 dic['y'] = [self.head_map[y['name']] for y in data['values']]
             except:
@@ -118,12 +121,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', type=str, default='', help='original plotly data')
     parser.add_argument('--save', type=str, default='', help='save dataset dir')
-    parser.add_argument('--type_first', action='store_true', help='type at first, elas at last'
+    parser.add_argument('--type_first', action='store_true', help='type at first, elas at last')
     args = parser.parse_args()
 
     dataset_path = args.data
     save_dir = args.save
-    type_first=args.type_first
+    type_first = args.type_first
 
     lost_table = 0
     lost_chart = 0
@@ -171,7 +174,7 @@ if __name__ == '__main__':
                 lost_chart += 1
                 continue
             chart_type = pairs[str(tid)][i]['anaType']
-            chart_data = pair_data.get_chart_data(chart_data,chart_type,type_first,type_first)
+            chart_data = pair_data.get_chart_data(chart_data, chart_type, type_first, type_first)
             if chart_data is None:
                 chart_error += 1
                 continue

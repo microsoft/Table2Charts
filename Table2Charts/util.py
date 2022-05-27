@@ -1,10 +1,12 @@
-import os
-from datetime import datetime, timezone, timedelta
-from typing import Optional
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 
+import os
 import torch
+from datetime import datetime, timezone, timedelta
 from torch.nn import Module
 from torch.optim.optimizer import Optimizer
+from typing import Optional
 
 
 def time_str():

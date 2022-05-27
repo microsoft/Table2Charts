@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import numpy as np
 from collections import Counter
 from feature_extractor_constants import _DEFAULT_FORMAT_MAPPINGS, EPS, SAMPLED_LENGTH_LIMIT
@@ -37,11 +40,17 @@ class SourceFeatures():
             if current_num_format_string == None:
                 current_num_format_string = _DEFAULT_FORMAT_MAPPINGS.get(current_num_format_id)
             if current_num_format_string != None:
-                current_parsed_field['isPercent'] = '%' in current_num_format_string  # If '%' in the format then True else False
-                current_parsed_field['isCurrency'] = any(_.startswith(currency_prefix) for _ in current_data for currency_prefix in ['$', '€', '¥', '£'])  # if any data starts with currency prefixes True else False
-                current_parsed_field['hasYear'] = any(year_string in current_num_format_string for year_string in ['y', 'Y'])  # If 'y' or 'Y' in the format then True else False
-                current_parsed_field['hasMonth'] = any(month_string in current_num_format_string for month_string in ['m', 'M'])  # If 'm' or 'M' in the format then True else False,
-                current_parsed_field['hasDay'] = any(day_string in current_num_format_string for day_string in ['d', 'D'])  # If 'd' or 'D' in the format then True else False
+                current_parsed_field[
+                    'isPercent'] = '%' in current_num_format_string  # If '%' in the format then True else False
+                current_parsed_field['isCurrency'] = any(
+                    _.startswith(currency_prefix) for _ in current_data for currency_prefix in
+                    ['$', '€', '¥', '£'])  # if any data starts with currency prefixes True else False
+                current_parsed_field['hasYear'] = any(year_string in current_num_format_string for year_string in
+                                                      ['y', 'Y'])  # If 'y' or 'Y' in the format then True else False
+                current_parsed_field['hasMonth'] = any(month_string in current_num_format_string for month_string in
+                                                       ['m', 'M'])  # If 'm' or 'M' in the format then True else False,
+                current_parsed_field['hasDay'] = any(day_string in current_num_format_string for day_string in
+                                                     ['d', 'D'])  # If 'd' or 'D' in the format then True else False
             else:
                 current_parsed_field['isPercent'] = False
                 current_parsed_field['isCurrency'] = False
@@ -57,7 +66,8 @@ class SourceFeatures():
         data_features = {}
         if field_type in [0, 1, 3, 7]:  # 0(Unkown), 1(String), 3(DateTime), 7(Year)
             # string field
-            common_prefix_score, common_suffix_score, key_entropy_score, char_entropy_score = self.analyze_string_and_entropy_feature(field_data)
+            common_prefix_score, common_suffix_score, key_entropy_score, char_entropy_score = self.analyze_string_and_entropy_feature(
+                field_data)
             change_rate, cardinality, absolute_cardinality, major = self.analyze_string_feature(field_data)
             median_length, length_variance, average_log_length = self.analyze_string_length_feature(field_data)
 
@@ -76,9 +86,12 @@ class SourceFeatures():
 
         if field_type == 5:
             # numerics field
-            aggr_percent_formatted, aggr01_ranged, aggr0100_ranged, aggr_integers, aggr_negative = self.get_aggr_features(field_data, field_idx)
-            common_prefix_score, common_suffix_score, key_entropy_score, char_entropy_score, benford = self.analyze_string_and_entropy_feature_numerical(field_data)
-            data_range, change_rate, partial_ordered, variance, cov, cardinality, absolute_cardinality, spread, major = self.analyze_numerical_feature(field_data)
+            aggr_percent_formatted, aggr01_ranged, aggr0100_ranged, aggr_integers, aggr_negative = self.get_aggr_features(
+                field_data, field_idx)
+            common_prefix_score, common_suffix_score, key_entropy_score, char_entropy_score, benford = self.analyze_string_and_entropy_feature_numerical(
+                field_data)
+            data_range, change_rate, partial_ordered, variance, cov, cardinality, absolute_cardinality, spread, major = self.analyze_numerical_feature(
+                field_data)
             equal_progression_confidence = self.analyze_equal_progression(field_data)
             geometric_progression_confidence = self.analyze_geometric_progression(field_data)
             median_length, length_variance = self.analyze_string_length_feature_string(field_data)
@@ -144,8 +157,10 @@ class SourceFeatures():
         common_prefix_score = max(prefixes.values()) / sampled_count if len(prefixes) != 0 else 0
         common_suffix_score = max(suffixes.values()) / sampled_count if len(suffixes) != 0 else 0
 
-        key_entropy_score = -sum(map(lambda x: x*np.log2(x), np.array(list(key_distribution.values()))/sampled_count))
-        char_entropy_score = -sum(map(lambda x: x*np.log2(x), np.array(list(char_distribution.values()))/total_chars))
+        key_entropy_score = -sum(
+            map(lambda x: x * np.log2(x), np.array(list(key_distribution.values())) / sampled_count))
+        char_entropy_score = -sum(
+            map(lambda x: x * np.log2(x), np.array(list(char_distribution.values())) / total_chars))
 
         return common_prefix_score, common_suffix_score, key_entropy_score, char_entropy_score
 
@@ -156,7 +171,7 @@ class SourceFeatures():
         # Ordinal Features
         if len(field_data) > 1:
             for cell_idx in range(1, len(field_data)):
-                if field_data[cell_idx] != field_data[cell_idx-1]:
+                if field_data[cell_idx] != field_data[cell_idx - 1]:
                     change_rate += 1
             change_rate /= len(field_data) - 1
         else:
@@ -249,19 +264,23 @@ class SourceFeatures():
                     prefixes[cell[0]] = prefixes[cell[0]] + 1 if cell[0] in prefixes else 1
                     suffixes[cell[-1]] = suffixes[cell[-1]] + 1 if cell[-1] in suffixes else 1
                     if cell[0] >= '0' and cell[0] <= '9':
-                        first_digit_count[cell[0]] = first_digit_count[cell[0]] + 1 if cell[0] in first_digit_count else 1
+                        first_digit_count[cell[0]] = first_digit_count[cell[0]] + 1 if cell[
+                                                                                           0] in first_digit_count else 1
                     elif cell[0] == '-' and len(cell) > 1 and cell[1] >= '0' and cell[1] <= '9':
-                        first_digit_count[cell[1]] = first_digit_count[cell[1]] + 1 if cell[1] in first_digit_count else 1
+                        first_digit_count[cell[1]] = first_digit_count[cell[1]] + 1 if cell[
+                                                                                           1] in first_digit_count else 1
 
         # Get the scores
         common_prefix_score = max(prefixes.values()) / sampled_count if len(prefixes) != 0 else 0
         common_suffix_score = max(suffixes.values()) / sampled_count if len(suffixes) != 0 else 0
 
-        key_entropy_score = -sum(map(lambda x: x*np.log2(x), np.array(list(key_distribution.values()))/sampled_count))
-        char_entropy_score = -sum(map(lambda x: x*np.log2(x), np.array(list(char_distribution.values()))/total_chars))
+        key_entropy_score = -sum(
+            map(lambda x: x * np.log2(x), np.array(list(key_distribution.values())) / sampled_count))
+        char_entropy_score = -sum(
+            map(lambda x: x * np.log2(x), np.array(list(char_distribution.values())) / total_chars))
 
         # get Benford feature
-        skewing = np.sum([(first_digit_count[str(i)] / sampled_count - Benford_Std[i]) **2 for i in range(1,10)])
+        skewing = np.sum([(first_digit_count[str(i)] / sampled_count - Benford_Std[i]) ** 2 for i in range(1, 10)])
         benford = np.sqrt(skewing)
 
         # TODO: Notice that the suffix score might not be accurate because the digit is largely affected by the precision of the data value
@@ -294,7 +313,7 @@ class SourceFeatures():
         # Calculate satisitc features
         # variance = np.var(field_data)
         average = np.mean(field_data)
-        variance = np.sqrt(np.mean((np.array(field_data) - average)**2))
+        variance = np.sqrt(np.mean((np.array(field_data) - average) ** 2))
         cov = variance / average if abs(average) > 1e-7 else 0
 
         # Sort numeric content array and calculate range, cardinality, major and spread
@@ -305,7 +324,7 @@ class SourceFeatures():
         full_cardinality = 1
 
         for idx in range(1, len(field_data)):
-            if field_data[idx] - field_data[idx-1] <= 1e-7:
+            if field_data[idx] - field_data[idx - 1] <= 1e-7:
                 if current_count + 1 > major_count:
                     major_count = current_count + 1
             else:
@@ -382,7 +401,8 @@ class SourceFeatures():
         geometric_progression_confidence += EPS
 
         if geometric_progression_confidence > 0:
-            geometric_progression_confidence = -1 * np.log10(geometric_progression_confidence) / 34  # The original value lies in (0,34), divide by 34 to normalize
+            geometric_progression_confidence = -1 * np.log10(
+                geometric_progression_confidence) / 34  # The original value lies in (0,34), divide by 34 to normalize
         else:
             geometric_progression_confidence = 0
 
@@ -405,7 +425,8 @@ class SourceFeatures():
 
         # Calulate the variance of the difference sequence
         # The maximum of this value is 16, so divide it by 16 to unify it.
-        difference_var = (1.0 / (len(sequence)-1)) * np.sum((np.array(diff_sequence) - average_diff) ** 2) * (1.0 / 16.0)
+        difference_var = (1.0 / (len(sequence) - 1)) * np.sum((np.array(diff_sequence) - average_diff) ** 2) * (
+                    1.0 / 16.0)
         return difference_var
 
     def is_illegal_double_string(self, string):
@@ -441,10 +462,10 @@ class SourceFeatures():
 
         sum_value = sum(field_data)
         mean = sum_value / len(field_data)
-        bias_squared = [(x - mean)**2 for x in field_data]
+        bias_squared = [(x - mean) ** 2 for x in field_data]
         variance = np.sqrt(np.mean(bias_squared))
-        skewness = np.sum([(x - mean)**3 for x in field_data]) / ((len(field_data) - 1) * variance ** 3)
-        kurtosis = np.sum([bs**2 for bs in bias_squared]) / np.sum(bias_squared) ** 2
+        skewness = np.sum([(x - mean) ** 3 for x in field_data]) / ((len(field_data) - 1) * variance ** 3)
+        kurtosis = np.sum([bs ** 2 for bs in bias_squared]) / np.sum(bias_squared) ** 2
 
         sorted_data = sorted(field_data)
         gini = 0
@@ -472,14 +493,16 @@ class SourceFeatures():
             if cell_idx < 1:
                 score_1_sum += 0
             else:
-                result, aux_value = self.compare_pieces(column_pieces[cell_idx-1], column_pieces[cell_idx], ordinal_offset_1[cell_idx-1])
+                result, aux_value = self.compare_pieces(column_pieces[cell_idx - 1], column_pieces[cell_idx],
+                                                        ordinal_offset_1[cell_idx - 1])
                 score_1_sum += result
                 ordinal_offset_1[cell_idx] = aux_value
 
             if cell_idx < 4:
                 score_4_sum += 0
             else:
-                result, aux_value = self.compare_pieces(column_pieces[cell_idx-4], column_pieces[cell_idx], ordinal_offset_4[cell_idx-4])
+                result, aux_value = self.compare_pieces(column_pieces[cell_idx - 4], column_pieces[cell_idx],
+                                                        ordinal_offset_4[cell_idx - 4])
                 score_4_sum += result
                 ordinal_offset_4[cell_idx] = aux_value
 

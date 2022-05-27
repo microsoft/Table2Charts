@@ -1,4 +1,5 @@
-from typing import Dict, Tuple
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 
 import torch
 import torch.nn as nn
@@ -6,10 +7,11 @@ from allennlp.modules.attention import LinearAttention
 from allennlp.modules.seq2seq_encoders import PytorchSeq2SeqWrapper
 from allennlp.nn import util
 from allennlp.nn.activations import Activation
+from data import TokenType
 from torch.nn.modules.linear import Linear
 from torch.nn.modules.rnn import GRUCell
+from typing import Dict, Tuple
 
-from data import TokenType
 from .config import CopyNetConfig
 from .embedding import InputEmbedding
 
@@ -82,7 +84,7 @@ def swap_field_cmd_probs(input_probs, num_cmd_tokens, source_mask):
     # batch * 1
     num_fields = torch.sum(source_mask, 1, keepdim=True, dtype=torch.long)
     # batch * num_cmd_tokens
-    cmd_replace_index = num_fields.expand(-1, num_cmd_tokens) +\
+    cmd_replace_index = num_fields.expand(-1, num_cmd_tokens) + \
                         torch.arange(num_cmd_tokens, device=num_fields.device, dtype=torch.long).repeat(batch_size, 1)
 
     # batch * source_length
@@ -112,7 +114,8 @@ class CopyNetSeq2Seq(nn.Module):
         self.data_len = config.data_len
         # Encoding modules.
         self._encoder = PytorchSeq2SeqWrapper(
-            torch.nn.GRU(input_size=config.hidden, hidden_size=config.encoder_GRU_hidden, num_layers=config.encoder_layers,
+            torch.nn.GRU(input_size=config.hidden, hidden_size=config.encoder_GRU_hidden,
+                         num_layers=config.encoder_layers,
                          bidirectional=True, batch_first=True))
         # Embedding modules.
         self.input_embed = input_embedding
@@ -183,7 +186,9 @@ class CopyNetSeq2Seq(nn.Module):
 
         # When ablation, dqn_state["semantic_embeds"] size will be like [batch], and useless in input_embed,
         # so it will be "None" in dqn_actions
-        dqn_actions = {key: None if len(dqn_actions[key].size()) == 1 else torch.narrow(dqn_actions[key], 1, 0, max_num_fields) for key in dqn_actions.keys()}
+        dqn_actions = {
+            key: None if len(dqn_actions[key].size()) == 1 else torch.narrow(dqn_actions[key], 1, 0, max_num_fields) for
+            key in dqn_actions.keys()}
 
         self._encoder._module.flatten_parameters()
         state = self._encode(dqn_actions)
@@ -271,7 +276,7 @@ class CopyNetSeq2Seq(nn.Module):
         return state
 
     def _get_generation_scores(self, state: Dict[str, torch.Tensor]) -> Tuple[torch.Tensor, torch.Tensor]:
-        return self._output_generation_layer_1(state["decoder_hidden"]),\
+        return self._output_generation_layer_1(state["decoder_hidden"]), \
                self._output_generation_layer_2(state["decoder_hidden"])
 
     def _get_copy_scores(self, state: Dict[str, torch.Tensor]) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -374,7 +379,6 @@ class CopyNet(CopyNetSeq2Seq):
     def __init__(self, config: CopyNetConfig):
         input_embed = InputEmbedding(config)
         super().__init__(input_embed, config)
-
 
 # if __name__ == "__main__":
 #     step_log_probs = torch.arange(0.0, 168.0, 1.0).view(2, 6, 7, 2)

@@ -1,4 +1,7 @@
-﻿using DocumentFormat.OpenXml.Vml.Office;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+using DocumentFormat.OpenXml.Vml.Office;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;

@@ -1,18 +1,19 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import json
 import logging
-import os
-from enum import IntEnum
-from time import perf_counter, process_time
-from typing import List, Callable
-
 import numpy as np
+import os
 import torch
 import torch.distributed as dist
+from enum import IntEnum
+from helper import save_ddp_checkpoint
 from sklearn import metrics
+from time import perf_counter, process_time
 from torch.nn import Module
 from torch.utils.tensorboard import SummaryWriter
-
-from helper import save_ddp_checkpoint
+from typing import List, Callable
 
 try:
     from apex import amp

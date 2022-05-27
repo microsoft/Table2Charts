@@ -1,5 +1,7 @@
-import math
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 
+import math
 import torch
 import torch.nn as nn
 
@@ -27,6 +29,7 @@ class InputEmbedding(nn.Module):
             for cat, embed in zip(categories.chunk(categories.size(-1), -1), self.cat_embeds):
                 x += embed(cat.squeeze(dim=-1))
         return self.dropout(x)
+
 
 class PositionalEmbedding(nn.Module):
     def __init__(self, d_model, max_len=256):

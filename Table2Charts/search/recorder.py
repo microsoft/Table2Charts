@@ -1,12 +1,13 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import json
 import os
 from collections import defaultdict
+from data import State, DataTable, Result
+from sortedcontainers import SortedList
 from time import process_time, perf_counter
 from typing import Optional, Set, List, Tuple, Iterable
-
-from sortedcontainers import SortedList
-
-from data import State, DataTable, Result
 
 
 class Evaluation:

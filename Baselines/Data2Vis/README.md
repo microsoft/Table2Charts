@@ -10,16 +10,19 @@ Output: [{"type": "bar3D", "y": ["str0"], "x": ["num0", "num1", "num2"], "group"
 
 ## Setup
  - Clone [Data2Vis](https://github.com/victordibia/data2vis) repository to this directory.
- - Fix bugs of [seq2seq](https://github.com/google/seq2seq) code and adapt it to tf-1.x.
- ```shell
-mv setup/helper.py data2vis/seq2seq/contrib/seq2seq/helper.py
-mv setup/utils.py data2vis/seq2seq/training/utils.py
-mv infer.py data2vis/bin/infer.py
- ```
  - Replace with new config files.
  ```shell
  mv chart.yml data2vis/example_configs/
  mv chart_infer.yml data2vis/example_configs/
+ ```
+ - Save results of Data2Vis. Change `_save_prediction_to_dict()` function in `data2vis/bin/infer.py` as follows:
+ ```python
+def _save_prediction_to_dict(output_string):
+    if not os.path.exists(FLAGS.model_dir+'/pred'):
+        os.makedirs(FLAGS.model_dir+'/pred')
+    with open(FLAGS.model_dir+'/pred/'+FLAGS.save_file,'a')as f:
+        f.write(json.dumps(output_string))
+        f.write('\n')
  ```
  - Generate dataset and vocabulary for training and inference.
  ```shell

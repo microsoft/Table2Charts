@@ -1,5 +1,8 @@
-import json
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import argparse
+import json
 from data import SpecialTokens
 from model import CopyNet, get_cp_config
 from search.agent import BeamDrillDownAgent

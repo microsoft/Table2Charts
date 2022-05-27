@@ -1,4 +1,7 @@
-﻿using ColumnClassification.Contract;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+using ColumnClassification.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;

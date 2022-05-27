@@ -1,12 +1,14 @@
-import logging
-import os
-from timeit import default_timer as timer
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 
+import logging
 import numpy as np
+import os
 import torch
 import torch.distributed as dist
 import torch.nn as nn
 from sklearn import metrics
+from timeit import default_timer as timer
 from torch.cuda.streams import Stream
 from torch.optim.optimizer import Optimizer
 from torch.utils.data import DataLoader

@@ -1,8 +1,10 @@
-import logging
-from datetime import datetime, timezone, timedelta
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 
+import logging
 import torch
 import torch.distributed as dist
+from datetime import datetime, timezone, timedelta
 from torch.nn import NLLLoss, Module
 from torch.nn.parallel import DistributedDataParallel
 from torch.optim.optimizer import Optimizer

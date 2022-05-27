@@ -1,11 +1,13 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor, Future
 from copy import copy
-from itertools import chain
-from typing import Optional, List, Iterable, Callable
-
 from data import QValue, DataTable, Result
+from itertools import chain
 from search import merge_eval_info
+from typing import Optional, List, Iterable, Callable
 
 
 class Agent(ABC):

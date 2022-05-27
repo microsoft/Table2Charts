@@ -1,23 +1,24 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import argparse
 import json
 import logging
+import numpy as np
 import os
 import queue
-from threading import Thread
-from time import perf_counter
-from typing import List
-
-import numpy as np
 import torch
 import torch.multiprocessing as mp
-from tqdm import tqdm
-
 from data import DEFAULT_LANGUAGES, DEFAULT_FEATURE_CHOICES, DEFAULT_ANALYSIS_TYPES, get_data_config, DataConfig, \
     SpecialTokens, QValue, Index, AnaType
 from model import CopyNet, DEFAULT_MODEL_SIZES, DEFAULT_MODEL_NAMES, get_cp_config
 from search import merge_eval_info
 from search.agent import DEFAULT_SEARCH_LIMITS, get_search_config, SearchConfig, \
     Agent, ParallelAgents, BeamDrillDownAgent
+from threading import Thread
+from time import perf_counter
+from tqdm import tqdm
+from typing import List
 from util import load_checkpoint, to_device, time_str
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',

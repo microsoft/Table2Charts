@@ -1,10 +1,12 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
+import torch
 from bisect import bisect_left
 from collections import namedtuple
 from copy import copy
-from typing import List, Dict, Optional, Set
-
-import torch
 from numpy import ndarray
+from typing import List, Dict, Optional, Set
 
 from .config import DataConfig
 from .special_tokens import SpecialTokens
