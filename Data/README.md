@@ -12,7 +12,7 @@ The public Plotly corpus is available at [VizML repository](https://github.com/m
 
 
 ## Human Evaluation Data
-We crawl 500 public web HTML tables with different schema, and after human evaluation we get 330 tables who are suitable for generating charts. In the JSON file [`Data/HumanEvaluation/human_eval_results.json`](Results/HumanEvaluation/human_eval_results.json), there are the original 330 tables, their corresponding charts recommended by Table2Charts, Data2Vis & DeepEye, and human evaluation results.
+We crawl 500 public web HTML tables with different schema, and after human evaluation we get 330 tables who are suitable for generating charts. In the JSON file [`Results/HumanEvaluation/human_eval_results.json`](Results/HumanEvaluation/human_eval_results.json), there are the original 330 tables, their corresponding charts recommended by Table2Charts, Data2Vis & DeepEye, and human evaluation results.
 
 The result of one (table, charts) being evaluated is organized as the following format:
 ```JSON
