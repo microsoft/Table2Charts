@@ -12,7 +12,7 @@ The public Plotly corpus is available at [VizML repository](https://github.com/m
 
 
 ## Human Evaluation Data
-We crawl 500 public web HTML tables with different schema, and after human evaluation we get 330 tables who are suitable for generating charts. In the JSON file [`Data/HumanEvaluation/human_eval_results.json`](HumanEvaluation/human_eval_results.json), there are the original 330 tables, their corresponding charts recommended by Table2Charts, Data2Vis & DeepEye, and human evaluation results.
+We crawl 500 public web HTML tables with different schema, and after human evaluation we get 330 tables who are suitable for generating charts. In the JSON file [`Data/HumanEvaluation/human_eval_results.json`](Results/HumanEvaluation/human_eval_results.json), there are the original 330 tables, their corresponding charts recommended by Table2Charts, Data2Vis & DeepEye, and human evaluation results.
 
 The result of one (table, charts) being evaluated is organized as the following format:
 ```JSON
@@ -45,4 +45,6 @@ For a chart, `ANA`, `X`, `Y`, `GRP`, `score` mean the chart type, x fields, y fi
 The ratings for a chart from all three raters are stored in a list.
 
 
-[`Data/HumanEvaluation/humanEvaluation.py`](HumanEvaluation/humanEvaluation.py) gives the distribution of the ratings of the three systems, conducts Wilcoxon signed-rank test and computes Cliff's delta effect size for comparison between Table2Charts and the two other systems.
+[`Results/HumanEvaluation/humanEvaluation.py`](Results/HumanEvaluation/humanEvaluation.py) gives the distribution of the ratings of the three systems, conducts Wilcoxon signed-rank test and computes Cliff's delta effect size for comparison between Table2Charts and the two other systems.
+
+The tables and human evaluation labels are published under the [CDLA license](CDLA-Permissive-2.0.md).
