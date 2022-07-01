@@ -1,5 +1,5 @@
 # Table2Charts: Recommending Charts by Learning Shared Table Representations
-This repository provides code and data of the paper _Table2Charts: Recommending Charts by Learning Shared Table Representations_.
+This repository provides code and data of the paper [_Table2Charts: Recommending Charts by Learning Shared Table Representations_](https://www.microsoft.com/en-us/research/publication/table2charts-recommending-charts-by-learning-shared-table-representations/)
 
 ## Table2Charts Code
 The core parts included in the folder [`Table2Charts`](Table2Charts). See [`Table2Charts/README.md`](Table2Charts/README.md) for details.
