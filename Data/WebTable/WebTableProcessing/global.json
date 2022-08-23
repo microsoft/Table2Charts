@@ -1,6 +1,6 @@
 {
   "sdk": {
     "version": "4.7.2",
-    "rollForward": "latestMajor"
+    "rollForward": "disable"
   }
 }
